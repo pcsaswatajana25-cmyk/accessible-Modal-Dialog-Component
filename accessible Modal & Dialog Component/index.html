@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Production-ready, accessible, responsive vanilla JavaScript modal dialog component adhering to W3C WAI-ARIA 1.2 authoring standards.">
+  <title>Accessible Modal Dialog Component | Vanilla JS Showcase</title>
+
+  <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/demo.css">
+</head>
+<body>
+
+  <noscript>
+    <div style="background: #fef2f2; border: 1px solid #ef4444; color: #991b1b; padding: 1rem; margin: 1rem auto; max-width: 900px; border-radius: 8px;">
+      <strong>JavaScript is disabled:</strong> The interactive modals on this page require JavaScript for dynamic focus trapping and keyboard shortcuts. Static modal content remains accessible within standard semantic document flow.
+    </div>
+  </noscript>
+
+  <div class="demo-container">
+    <header class="demo-header">
+      <h1>Accessible Modal Dialog Component</h1>
+      <p class="subtitle">
+        A production-grade, zero-dependency interactive UI component built with semantic HTML5, modern responsive CSS, and resilient Vanilla JavaScript.
+      </p>
+      <div class="badge-row">
+        <span class="badge">WAI-ARIA 1.2 Compliant</span>
+        <span class="badge">WCAG 2.1 AA Focus Trap</span>
+        <span class="badge">Zero Dependencies</span>
+        <span class="badge">Light & Dark Mode</span>
+        <span class="badge">Reduced Motion Support</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="grid-showcase" aria-label="Interactive Modal Demonstrations">
+        <article class="card">
+          <h2>1. Interactive Form Modal</h2>
+          <p>Features automatic focus placement on the first input, full keyboard tab cycling, and backdrop dismissal.</p>
+          <button type="button" class="btn btn-primary" data-modal-target="#modal-form">Open Form Modal</button>
+        </article>
+
+        <article class="card">
+          <h2>2. Critical Confirmation (Alert)</h2>
+          <p>Employs <code>role="alertdialog"</code> for urgent notifications, placing initial focus on the safe "Cancel" action.</p>
+          <button type="button" class="btn btn-danger" data-modal-target="#modal-alert">Trigger Danger Alert</button>
+        </article>
+
+        <article class="card">
+          <h2>3. Off-Canvas Drawer Variant</h2>
+          <p>Slide-over panel layout ideal for mobile menus, filter drawers, or contextual settings panels.</p>
+          <button type="button" class="btn btn-secondary" data-modal-target="#modal-drawer">Open Slide Drawer</button>
+        </article>
+
+        <article class="card">
+          <h2>4. Scrollable Long-Content Modal</h2>
+          <p>Prevents page body scroll while preserving scrollbar width compensation to eliminate layout shift.</p>
+          <button type="button" class="btn btn-secondary" data-modal-target="#modal-terms">View Long Content</button>
+        </article>
+
+        <article class="card">
+          <h2>5. Stacked / Nested Modals</h2>
+          <p>Handles multi-layer modal stacks with LIFO keyboard focus management and independent dismissal.</p>
+          <button type="button" class="btn btn-primary" data-modal-target="#modal-stacked-parent">Launch Stacked Flow</button>
+        </article>
+
+        <article class="card">
+          <h2>6. Automated Test Suite</h2>
+          <p>Run programmatic unit and accessibility verification tests for DOM manipulation and focus trapping.</p>
+          <a href="test/test-runner.html" class="btn btn-secondary" target="_blank" rel="noopener">Open Test Suite &rarr;</a>
+        </article>
+      </section>
+
+      <section class="log-card" aria-label="Lifecycle Event Monitor">
+        <div class="log-header">
+          <h2 style="margin:0; font-size:1.1rem;">Live Component Event Stream</h2>
+          <button type="button" id="clear-log-btn" class="btn btn-secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">Clear Console</button>
+        </div>
+        <div id="log-console" class="log-console" role="region" aria-live="polite" aria-atomic="false">
+          <div class="log-line"><span class="log-time">[Ready]</span> ModalDialog component loaded. Click any trigger to monitor dispatched events.</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- MODAL 1: INTERACTIVE FORM MODAL -->
+  <div id="modal-form" class="modal is-hidden" aria-hidden="true">
+    <div class="modal__backdrop" tabindex="-1"></div>
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modal-form-title" aria-describedby="modal-form-desc">
+      <header class="modal__header">
+        <h2 id="modal-form-title" class="modal__title">User Feedback Survey</h2>
+        <button type="button" class="modal__close" data-modal-close aria-label="Close dialog">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </header>
+
+      <form id="feedback-form" onsubmit="event.preventDefault(); alert('Form submitted successfully!'); document.querySelector('#modal-form').__modalInstance.close();">
+        <div class="modal__body">
+          <p id="modal-form-desc">Please share your impressions to help us improve the interface components.</p>
+          
+          <div class="form-group">
+            <label for="feedback-name" class="form-label">Full Name</label>
+            <input type="text" id="feedback-name" class="form-control" data-autofocus placeholder="Jane Doe" required>
+          </div>
+
+          <div class="form-group">
+            <label for="feedback-rating" class="form-label">Component Rating</label>
+            <select id="feedback-rating" class="form-control">
+              <option value="5">★★★★★ - Excellent accessibility & smooth animations</option>
+              <option value="4">★★★★☆ - Great usability</option>
+              <option value="3">★★★☆☆ - Average</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="feedback-comments" class="form-label">Comments</label>
+            <textarea id="feedback-comments" class="form-control" rows="3" placeholder="Tell us about your experience..."></textarea>
+          </div>
+        </div>
+
+        <footer class="modal__footer">
+          <button type="button" class="btn btn-secondary" data-modal-close>Cancel</button>
+          <button type="submit" class="btn btn-primary">Submit Feedback</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 2: CRITICAL ALERT DIALOG -->
+  <div id="modal-alert" class="modal modal--alert is-hidden" data-role="alertdialog" aria-hidden="true">
+    <div class="modal__backdrop" tabindex="-1"></div>
+    <div class="modal__dialog" role="alertdialog" aria-modal="true" aria-labelledby="modal-alert-title" aria-describedby="modal-alert-desc">
+      <header class="modal__header">
+        <h2 id="modal-alert-title" class="modal__title">
+          <svg style="width:20px;height:20px;fill:none;stroke:#dc2626;stroke-width:2;" viewBox="0 0 24 24">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          Confirm Permanent Deletion
+        </h2>
+        <button type="button" class="modal__close" data-modal-close aria-label="Close alert dialog">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </header>
+
+      <div class="modal__body">
+        <p id="modal-alert-desc">Are you sure you want to delete this repository? This action is permanent and cannot be undone.</p>
+      </div>
+
+      <footer class="modal__footer">
+        <button type="button" class="btn btn-secondary" data-modal-close data-autofocus>Cancel, Keep Data</button>
+        <button type="button" class="btn btn-danger" onclick="alert('Item deleted.'); document.querySelector('#modal-alert').__modalInstance.close();">Yes, Delete Item</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- MODAL 3: OFF-CANVAS SLIDE DRAWER -->
+  <div id="modal-drawer" class="modal modal--drawer-right is-hidden" aria-hidden="true">
+    <div class="modal__backdrop" tabindex="-1"></div>
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modal-drawer-title">
+      <header class="modal__header">
+        <h2 id="modal-drawer-title" class="modal__title">System Preferences</h2>
+        <button type="button" class="modal__close" data-modal-close aria-label="Close drawer">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </header>
+
+      <div class="modal__body">
+        <p>Configure quick user preferences. Changes are applied in real time.</p>
+        <div class="form-group">
+          <label for="drawer-theme" class="form-label">Theme Mode</label>
+          <select id="drawer-theme" class="form-control" data-autofocus>
+            <option value="system">Auto (System Default)</option>
+            <option value="light">Light Mode</option>
+            <option value="dark">Dark Mode</option>
+          </select>
+        </div>
+      </div>
+
+      <footer class="modal__footer">
+        <button type="button" class="btn btn-primary" data-modal-close>Save & Close</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- MODAL 4: SCROLLABLE LONG CONTENT MODAL -->
+  <div id="modal-terms" class="modal modal--lg is-hidden" aria-hidden="true">
+    <div class="modal__backdrop" tabindex="-1"></div>
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modal-terms-title">
+      <header class="modal__header">
+        <h2 id="modal-terms-title" class="modal__title">Terms & Privacy Documentation</h2>
+        <button type="button" class="modal__close" data-modal-close aria-label="Close terms modal">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </header>
+
+      <div class="modal__body">
+        <p><strong>Section 1: General Usage Terms</strong></p>
+        <p>This software component is built using standard HTML5, CSS3, and ECMAScript specifications without external third-party dependencies.</p>
+        <p><strong>Section 2: Accessibility Commitment (WCAG 2.1 AA)</strong></p>
+        <p>All interactive states are engineered with programmatic accessibility features: focus traps, high-contrast outlines, screen reader ARIA roles, and keyboard navigation triggers.</p>
+        <p><strong>Section 3: Browser Fallback & Resilience</strong></p>
+        <p>In environments without JavaScript enabled, content remains cleanly readable inside semantic document structures.</p>
+      </div>
+
+      <footer class="modal__footer">
+        <button type="button" class="btn btn-primary" data-modal-close>I Accept</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- MODAL 5: STACKED MODALS (PARENT & CHILD) -->
+  <div id="modal-stacked-parent" class="modal is-hidden" aria-hidden="true">
+    <div class="modal__backdrop" tabindex="-1"></div>
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modal-stacked-title">
+      <header class="modal__header">
+        <h2 id="modal-stacked-title" class="modal__title">Step 1: Configuration Flow</h2>
+        <button type="button" class="modal__close" data-modal-close aria-label="Close dialog">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </header>
+
+      <div class="modal__body">
+        <p>This modal represents the primary stage. You can trigger a secondary confirmation dialog directly from here.</p>
+        <button type="button" class="btn btn-secondary" data-modal-target="#modal-stacked-child">Launch Secondary Modal &rarr;</button>
+      </div>
+
+      <footer class="modal__footer">
+        <button type="button" class="btn btn-primary" data-modal-close>Finish</button>
+      </footer>
+    </div>
+  </div>
+
+  <div id="modal-stacked-child" class="modal modal--sm is-hidden" aria-hidden="true">
+    <div class="modal__backdrop" tabindex="-1"></div>
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modal-child-title">
+      <header class="modal__header">
+        <h2 id="modal-child-title" class="modal__title">Step 2: Sub-Dialog</h2>
+        <button type="button" class="modal__close" data-modal-close aria-label="Close sub-dialog">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </header>
+
+      <div class="modal__body">
+        <p>This is a nested child dialog. Pressing <kbd>Escape</kbd> or clicking close will dismiss only this sub-dialog, smoothly restoring focus to the parent dialog trigger.</p>
+      </div>
+
+      <footer class="modal__footer">
+        <button type="button" class="btn btn-primary" data-modal-close>Got It</button>
+      </footer>
+    </div>
+  </div>
+
+  <script src="js/modal.js"></script>
+  <script>
+    (function () {
+      const consoleEl = document.getElementById('log-console');
+      const clearBtn = document.getElementById('clear-log-btn');
+
+      function appendLog(eventName, targetId, detail) {
+        const time = new Date().toLocaleTimeString();
+        const line = document.createElement('div');
+        line.className = 'log-line';
+        line.innerHTML = `<span class="log-time">[${time}]</span> <strong>${eventName}</strong> on <code>#${targetId}</code> (trigger: ${detail.trigger ? (detail.trigger.tagName || detail.trigger) : 'api'})`;
+        consoleEl.appendChild(line);
+        consoleEl.scrollTop = consoleEl.scrollHeight;
+      }
+
+      ['modal:before-open', 'modal:open', 'modal:before-close', 'modal:close'].forEach((evt) => {
+        document.addEventListener(evt, (e) => {
+          appendLog(e.type, e.target.id, e.detail);
+        });
+      });
+
+      if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+          consoleEl.innerHTML = '<div class="log-line"><span class="log-time">[' + new Date().toLocaleTimeString() + ']</span> Log cleared.</div>';
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

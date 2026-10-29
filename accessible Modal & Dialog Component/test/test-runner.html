@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ModalDialog Test Runner | Automated Verification</title>
+  <link rel="stylesheet" href="../css/modal.css">
+  <style>
+    body { font-family: system-ui, sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 2rem; }
+    .runner-container { max-width: 840px; margin: 0 auto; }
+    header { margin-bottom: 2rem; border-bottom: 1px solid #334155; padding-bottom: 1rem; }
+    h1 { margin: 0 0 0.5rem; font-size: 1.75rem; color: #38bdf8; }
+    p { color: #94a3b8; margin: 0; }
+    .test-summary { padding: 1.25rem; border-radius: 8px; margin-bottom: 2rem; border: 1px solid transparent; }
+    .test-summary.all-passed { background: rgba(16, 185, 129, 0.15); border-color: #10b981; color: #34d399; }
+    .test-row { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; padding: 0.85rem 1rem; background: #1e293b; border: 1px solid #334155; border-radius: 6px; margin-bottom: 0.5rem; }
+    .test-row.pass { border-left: 4px solid #10b981; }
+    .test-badge { font-weight: 700; font-size: 0.8rem; padding: 0.2rem 0.5rem; border-radius: 4px; background: #10b981; color: #0f172a; }
+    .test-name { font-size: 0.95rem; flex: 1; }
+    .nav-links { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #334155; }
+    .nav-links a { color: #38bdf8; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="runner-container">
+    <header>
+      <h1>ModalDialog Verification Test Runner</h1>
+      <p>Automated verification of DOM manipulation, focus trapping, ARIA semantics, and event lifecycles.</p>
+    </header>
+
+    <div id="test-summary" class="test-summary all-passed">
+      <h3>Running tests...</h3>
+    </div>
+
+    <div id="test-results"></div>
+
+    <div class="nav-links">
+      <a href="../index.html">&larr; Return to Interactive Showcase</a>
+    </div>
+  </div>
+
+  <script src="../js/modal.js"></script>
+  <script src="modal.test.js"></script>
+</body>
+</html>

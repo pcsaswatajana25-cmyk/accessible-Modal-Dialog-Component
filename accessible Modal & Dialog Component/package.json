@@ -1,0 +1,20 @@
+{
+  "name": "accessible-modal-component",
+  "version": "1.0.0",
+  "description": "Production-grade accessible interactive modal dialog component in vanilla JavaScript, HTML, and CSS.",
+  "main": "js/modal.js",
+  "scripts": {
+    "test": "node test/node-runner.js"
+  },
+  "keywords": [
+    "modal",
+    "dialog",
+    "vanilla-js",
+    "accessibility",
+    "wai-aria",
+    "wcag",
+    "focus-trap"
+  ],
+  "author": "UI Engineering",
+  "license": "MIT"
+}
